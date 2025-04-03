@@ -2,7 +2,7 @@ let isDarkMode = false;
 
 const changeDisplay = document.getElementById("display-mode");
 const displayModeSvg = document.getElementById("display-mode-svg");
-const displayModeText = document.getElementById("display-mode-text")
+const displayModeText = document.getElementById("display-mode-text");
 
 changeDisplay.addEventListener("click", () => {
     const elements = document.querySelectorAll("*");
@@ -23,8 +23,6 @@ changeDisplay.addEventListener("click", () => {
     }
 })
 
-
-
 async function getData() {
     const url = "https://restcountries.com/v3.1/all";
     try {
@@ -41,33 +39,42 @@ async function getData() {
         return null;
     }
 }
+let currentCountryIndex = 0;
+
+function loadCountries(county, countyIndex) {
+    const modifiedcounty = county.slice(countyIndex, countyIndex + 12);
+    currentCountryIndex = countyIndex + 12;
+    const box = document.getElementById("countries-box");
+
+    modifiedcounty.forEach((element) => {
+        box.innerHTML += `
+            <div class="country">
+                <img src="${element.flags.svg}" alt="flag" class="country-flag">
+                <h4 class="country-name">${element.name.common}</h4>
+                <div class="little-data">
+                    <p class="population"><strong>Population:</strong> ${element.population}</p>
+                    <p class="region"><strong>Region:</strong> ${element.region}</p>
+                    <p class="capital"><strong>Capital:</strong> ${element.capital}</p>
+                </div>
+            </div>
+        `;
+    });
+}
 
 async function main() {
     const data = await getData();
-
     if (data) {
-        const modifiedData = data.slice(0, 12);
-        const box = document.getElementById("countries-box");
-
-        // modifiedData.forEach((element) => {
-        data.forEach((element) => {
-            box.innerHTML += `
-                    <div class="country">
-                        <img src="${element.flags.svg}" alt="flag" class="country-flag">
-                        <h4 class="country-name">${element.name.common}</h4>
-                        <div class="little-data">
-                            <p class="population"><strong>Population:</strong> ${element.population}</p>
-                            <p class="region"><strong>Region:</strong> ${element.region}</p>
-                            <p class="capital"><strong>Capital:</strong> ${element.capital}</p>
-                        </div>
-                    </div>
-        `;
-        });
+        loadCountries(data, currentCountryIndex);
     } else {
-        // Handle error case
         const box = document.getElementById("countries-box");
         box.textContent = "Failed to load country data.";
     }
-}
 
-main(); 
+    
+    const loadBtn = document.getElementById("load-more");
+    loadBtn.addEventListener("click", () => {
+        loadCountries(data, currentCountryIndex);
+    })
+}
+main();
+

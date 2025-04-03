@@ -29,7 +29,6 @@
     --element: hsl(209, 23%, 22%);
     --fc: hsl(0, 0%, 100%);
     --fc-input: hsl(0, 0%, 100%);
-
 }
 
 .hidden {
@@ -81,7 +80,6 @@ header {
     font-weight: 400;
     color: var(--fc);
 }
-
 
 #display-mode-svg {
     width: var(--fs-base);
@@ -194,6 +192,8 @@ header {
     -webkit-box-shadow: 1px 1px 20px 0px rgba(0, 0, 0, .1);
     -moz-box-shadow: 1px 1px 20px 0px rgba(0, 0, 0, .1);
     box-shadow: 1px 1px 10px 0px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    overflow: hidden;
 }
 
 .country-flag{
@@ -204,22 +204,22 @@ header {
 
 .country-name{
     margin-top: 1em;
-    margin-left: 1em;
+    margin-left: 1rem;
     color: var(--fc);
     font-weight: 700;
     text-decoration: underline;
-    font-size: var(--fs-lg);
+    font-size: var(--fs-md);
 }
 
 .little-data{
     margin-top: 1em;
-    margin-left: 1em;
+    margin-left: 1rem;
     display: flex;
     flex-direction: column;
     gap: 5px;
-    margin-bottom: 2em;
+    margin-bottom: 3rem;
     color: var(--fc);
-    font-size: var(--fs-base);
+    font-size: var(--fs-sm);
 }
 
 @media only screen and (max-width: 1024px) {
@@ -256,4 +256,20 @@ header {
     #countries-box{
         justify-content: space-evenly;
     }
+}
+
+#load-more {
+    margin-left: 50%;
+    transform: translate(-50%);
+    margin-bottom: 2rem;
+    align-self: center;
+    display: flex;
+    cursor: pointer;
+    padding: 1rem;
+    background-color: var(--element);
+    border: none;
+    -webkit-box-shadow: 1px 1px 20px 0px rgba(0, 0, 0, .1);
+    -moz-box-shadow: 1px 1px 20px 0px rgba(0, 0, 0, .1);
+    box-shadow: 1px 1px 10px 0px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
 }
