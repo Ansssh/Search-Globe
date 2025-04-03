@@ -208,6 +208,7 @@ header {
     color: var(--fc);
     font-weight: 700;
     text-decoration: underline;
+    font-size: var(--fs-lg);
 }
 
 .little-data{
@@ -218,8 +219,41 @@ header {
     gap: 5px;
     margin-bottom: 2em;
     color: var(--fc);
+    font-size: var(--fs-base);
 }
 
-/* .little-data strong{
-    font-weight: 600;
-} */
+@media only screen and (max-width: 1024px) {
+    .country{
+        width: 25vw;
+    }
+    .country-flag{
+        width: 25vw;
+        height: 12.5vw;
+    }
+}
+
+@media only screen and (max-width: 992px) {
+    .country{
+        width: 40vw;
+    }
+    .country-flag{
+        width: 40vw;
+        height: 20vw;
+    }
+    #countries-box{
+        justify-content: space-evenly;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .country{
+        width: 80vw;
+    }
+    .country-flag{
+        width: 80vw;
+        height: 40vw;
+    }
+    #countries-box{
+        justify-content: space-evenly;
+    }
+}
