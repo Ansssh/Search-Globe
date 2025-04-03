@@ -36,8 +36,38 @@ async function getData() {
 
         const data = await response.json();
         return data;
-    } catch(error) {
+    } catch (error) {
         console.error("Error fetching data:", error);
         return null;
     }
 }
+
+async function main() {
+    const data = await getData();
+
+    if (data) {
+        const modifiedData = data.slice(0, 12);
+        const box = document.getElementById("countries-box");
+
+        // modifiedData.forEach((element) => {
+        data.forEach((element) => {
+            box.innerHTML += `
+                    <div class="country">
+                        <img src="${element.flags.svg}" alt="flag" class="country-flag">
+                        <h4 class="country-name">${element.name.common}</h4>
+                        <div class="little-data">
+                            <p class="population"><strong>Population:</strong> ${element.population}</p>
+                            <p class="region"><strong>Region:</strong> ${element.region}</p>
+                            <p class="capital"><strong>Capital:</strong> ${element.capital}</p>
+                        </div>
+                    </div>
+        `;
+        });
+    } else {
+        // Handle error case
+        const box = document.getElementById("countries-box");
+        box.textContent = "Failed to load country data.";
+    }
+}
+
+main(); 

@@ -150,7 +150,7 @@ header {
     align-items: center;
     padding: var(--fs-sm);
     background-color: var(--element);
-    gap: var(--fs-sm);
+    gap: var(--fs-base);
     width: fit-content;
     border-radius: 5px;
 
@@ -174,3 +174,52 @@ header {
     width: var(--fs-base);
     fill: var(--fc);
 }
+
+/* Countries Box */
+
+#countries-box{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin: 5vh 5vw;
+    justify-content: space-between;
+    gap: var(--fs-lg);
+}
+
+.country{
+    display: flex;
+    flex-direction: column;
+    width: 20vw;
+    background-color: var(--element);
+    -webkit-box-shadow: 1px 1px 20px 0px rgba(0, 0, 0, .1);
+    -moz-box-shadow: 1px 1px 20px 0px rgba(0, 0, 0, .1);
+    box-shadow: 1px 1px 10px 0px rgba(0, 0, 0, 0.1);
+}
+
+.country-flag{
+    width: 20vw;
+    height: 10vw;
+    object-fit: contain;
+}
+
+.country-name{
+    margin-top: 1em;
+    margin-left: 1em;
+    color: var(--fc);
+    font-weight: 700;
+    text-decoration: underline;
+}
+
+.little-data{
+    margin-top: 1em;
+    margin-left: 1em;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-bottom: 2em;
+    color: var(--fc);
+}
+
+/* .little-data strong{
+    font-weight: 600;
+} */
