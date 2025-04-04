@@ -81,12 +81,13 @@ function showCountryDetails(countryName) {
                 <p id="s-languages"><strong>Languages: </strong>${Object.values(country.languages).join(", ")}</p>
             </div>
             <div id="single-country-borders">
-                <p id="borders-title">Border Countries:</p>
-                <button id="button-country">Pakistan</button>
-                <button id="button-country">Iraq</button>
+                <p id="borders-title"><strong>Border Countries:</strong></p>
+                ${country.borders.map((neighbor) => `<button id="button-country">${neighbor}</button>`).join("")}
             </div>
         </div>
     `;
+
+    
     
     box.classList.add("hidden");
     searchAndSortContainer.classList.add("hidden");

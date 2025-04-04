@@ -164,6 +164,15 @@ const item = {
     },
     "latlng": [-54.5, -37],
     "landlocked": false,
+    "borders": [
+      "DZA",
+      "BEN",
+      "BFA",
+      "TCD",
+      "LBY",
+      "MLI",
+      "NGA"
+    ],
     "area": 3903,
     "demonyms": {
       "eng": {
@@ -197,4 +206,8 @@ const item = {
   
 // console.log(Object.values(item.name.nativeName)[0].common)
 
-console.log(Object.values(item.languages).join(", "));
+// console.log(Object.values(item.languages).join(", "));
+
+console.log(item.borders.forEach((country)=>{
+  
+}))
