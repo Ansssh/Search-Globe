@@ -30,15 +30,16 @@
             </svg>
             <input type="text" id="search-bar" placeholder="Search for a country...">
         </div>
-    
+
         <div id="sort-box">
             <select name="countries" id="countries-sort">
-                <option value="0">Filter By Region</option>
+                <option value="">Filter By Region</option>
                 <option value="africa">Africa</option>
                 <option value="asia">Asia</option>
-                <option value="america">America</option>
+                <option value="americas">America</option>
                 <option value="europe">Europe</option>
                 <option value="oceania">Oceania</option>
+                <option value="antarctic">Antarctic</option>
             </select>
             <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" fill="#000000" id="arrow-head">
                 <path
@@ -47,12 +48,44 @@
             </svg>
         </div>
     </div>
+    <button id="back" class="hidden">
+        <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" id="back-arrow">
+            <path
+                d="M5 1H4L0 5L4 9H5V6H11C12.6569 6 14 7.34315 14 9C14 10.6569 12.6569 12 11 12H4V14H11C13.7614 14 16 11.7614 16 9C16 6.23858 13.7614 4 11 4H5V1Z">
+            </path>
+        </svg>
+        <span id="back-text">Go Back</span>
+    </button>
 
     <div id="countries-box"></div>
 
-    <button id="load-more">Load More</button>
+    <div id="country-solo" class="hidden">
+        <!-- <img src="https://flagcdn.com/gs.svg" alt="flag" id="single-country-flag">
+        <div id="single-country-data">
+            <h2 id="single-country-name">Country Name</h2>
+            <div id="single-country-advanced-data">
+                <p id="s-native-name"><strong>Native Name: </strong>Native Name</p>
+                <p id="s-population"><strong>Population: </strong>population</p>
+                <p id="s-region"><strong>Region: </strong>region</p>
+                <p id="s-sub-region"><strong>Sub Region: </strong>sub-region</p>
+                <p id="s-capital"><strong>Capital: </strong>Capital</p>
+                <p id="s-domain"><strong>Top Level Domain: </strong>.sx</p>
+                <p id="s-currencies"><strong>Currencies: </strong>Dollah</p>
+                <p id="s-languages"><strong>Languages: </strong>Languages</p>
+            </div>
+            <div id="single-country-borders">
+                <p id="borders-title">Border Countries:</p>
+                <button id="button-country">Pakistan</button>
+                <button id="button-country">Iraq</button>
+            </div>
+        </div> -->
+    </div>
 
-    <script src="script.js"></script>
+    <button id="load-more">Reload</button>
+
+    <!-- <script src="script.js"></script> -->
+    <script src="../test.js"></script>
+     <!-- <script src="../retest.js"></script> -->
 </body>
 
 </html>

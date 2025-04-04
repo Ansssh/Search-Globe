@@ -3,7 +3,15 @@ let isDarkMode = false;
 const changeDisplay = document.getElementById("display-mode");
 const displayModeSvg = document.getElementById("display-mode-svg");
 const displayModeText = document.getElementById("display-mode-text");
+const box = document.getElementById("countries-box");
+const searchAndSortContainer = document.getElementById("search-and-sort-container");
+const singleCountry = document.getElementById("country-solo");
+const backBtn = document.getElementById("back");
+const loadBtn = document.getElementById("load-more");
 
+
+
+// DARK & LIGHT theme SWAPPER
 changeDisplay.addEventListener("click", () => {
     const elements = document.querySelectorAll("*");
     if (isDarkMode === false) {
@@ -23,13 +31,69 @@ changeDisplay.addEventListener("click", () => {
     }
 })
 
+let currentCountryIndex = 0;
+
+let countryNaame;
+// This one Loads Countries from the parameters and every country contains an eventlistener, show & Hide elements === Helper Function
+function loadCountries(county, countyIndex) {
+    const modifiedcounty = county.slice(countyIndex, countyIndex + 12);
+    currentCountryIndex = countyIndex + 12;
+
+    modifiedcounty.forEach((element) => {
+        const countryDiv = document.createElement("div");
+        countryDiv.className = "country";
+        countryDiv.id = element.name.common.split(" ").join("-");
+
+        const flagImg = document.createElement("img");
+        flagImg.src = element.flags.svg;
+        flagImg.alt = `Flag of ${element.name.common}`;
+        flagImg.className = "country-flag";
+        countryDiv.appendChild(flagImg);
+
+        const nameHeading = document.createElement("h4");
+        nameHeading.className = "country-name";
+        nameHeading.textContent = element.name.common;
+        countryDiv.appendChild(nameHeading);
+
+        const dataDiv = document.createElement("div");
+        dataDiv.className = "little-data";
+
+        const populationPara = document.createElement("p");
+        populationPara.className = "population";
+        populationPara.innerHTML = `<strong>Population:</strong> ${element.population}`;
+        dataDiv.appendChild(populationPara);
+
+        const regionPara = document.createElement("p");
+        regionPara.className = "region";
+        regionPara.innerHTML = `<strong>Region:</strong> ${element.region}`;
+        dataDiv.appendChild(regionPara);
+
+        const capitalPara = document.createElement("p");
+        capitalPara.className = "capital";
+        capitalPara.innerHTML = `<strong>Capital:</strong> ${Array.isArray(element.capital) ? element.capital.join(", ") : element.capital || "N/A"}`;
+        dataDiv.appendChild(capitalPara);
+
+        countryDiv.appendChild(dataDiv);
+        box.appendChild(countryDiv);
+    });
+
+    const countryElements = document.querySelectorAll(".country");
+    countryElements.forEach((element) => {
+        element.addEventListener("click", () => {
+            showCountry(element.getAttribute("id"));
+            countryNaame = element.getAttribute("id").split("-").join(" ");
+        });
+    });
+}
+
+// Gets All the nodeList of Countries  === Main/HOME/Get
 async function getData() {
     const url = "https://restcountries.com/v3.1/all";
     try {
         const response = await fetch(url);
 
         if (!response.ok) {
-            throw new Error(`HTTP error! status: ${data.status}`);
+            throw new Error(`HTTP error! status: ${response.status}`);
         }
 
         const data = await response.json();
@@ -39,28 +103,8 @@ async function getData() {
         return null;
     }
 }
-let currentCountryIndex = 0;
 
-function loadCountries(county, countyIndex) {
-    const modifiedcounty = county.slice(countyIndex, countyIndex + 12);
-    currentCountryIndex = countyIndex + 12;
-    const box = document.getElementById("countries-box");
-
-    modifiedcounty.forEach((element) => {
-        box.innerHTML += `
-            <div class="country">
-                <img src="${element.flags.svg}" alt="flag" class="country-flag">
-                <h4 class="country-name">${element.name.common}</h4>
-                <div class="little-data">
-                    <p class="population"><strong>Population:</strong> ${element.population}</p>
-                    <p class="region"><strong>Region:</strong> ${element.region}</p>
-                    <p class="capital"><strong>Capital:</strong> ${element.capital}</p>
-                </div>
-            </div>
-        `;
-    });
-}
-
+// Uses the List of Countries === Main/HOME/Load
 async function main() {
     const data = await getData();
     if (data) {
@@ -69,12 +113,61 @@ async function main() {
         const box = document.getElementById("countries-box");
         box.textContent = "Failed to load country data.";
     }
-
-    
-    const loadBtn = document.getElementById("load-more");
-    loadBtn.addEventListener("click", () => {
-        loadCountries(data, currentCountryIndex);
-    })
+    loadBtn.addEventListener("click", async () => {
+        const newData = await getData();
+        if (newData) {
+            loadCountries(newData, currentCountryIndex);
+        } else {
+            console.log("Failed to load more data.");
+        }
+    });
 }
 main();
+
+
+let isAtHomePage = true;
+
+// HIDES ELEMENTS 
+function showCountry(countryName){
+    if(isAtHomePage === true){
+        box.classList.add("hidden");
+        searchAndSortContainer.classList.add("hidden");
+        loadBtn.classList.add("hidden");
+        backBtn.classList.remove("hidden");
+        singleCountry.classList.remove("hidden");
+
+        isAtHomePage = false;
+
+        // singleCountry.textContent = `Adios - ${countryName}`
+    }
+}
+
+// HIDES ELEMENTS
+backBtn.addEventListener("click", ()=>{
+    box.classList.remove("hidden");
+    searchAndSortContainer.classList.remove("hidden");
+    loadBtn.classList.remove("hidden")
+    backBtn.classList.add("hidden");
+    singleCountry.classList.add("hidden");
+    isAtHomePage = true;
+})
+
+// GETS A SINGLE COUNTRY === MAIN/SOLO/GET
+async function getSingleCountrydata(countryName) {
+    const url = `https://restcountries.com/v3.1/name/${countryName.split("-").join(" ")}`;
+    try {
+        const response = await fetch(url);
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error("Error fetching data:", error);
+        return null;
+    }
+}
+
 
