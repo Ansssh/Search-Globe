@@ -11,8 +11,9 @@ const searchInput = document.getElementById("search-bar");
 const filterSelect = document.getElementById("countries-sort");
 
 let allCountries = [];
-let currentIndex = 0;
-const batchSize = 12;
+
+// let currentIndex = 0;
+// const batchSize = 12;
 
 // Toggle Dark & Light Mode
 changeDisplay.addEventListener("click", () => {
@@ -41,8 +42,8 @@ function displayCountries(filter = "", searchQuery = "") {
     if (filter) filteredCountries = filteredCountries.filter(c => c.region.toLowerCase() === filter);
     if (searchQuery) filteredCountries = filteredCountries.filter(c => c.name.common.toLowerCase().includes(searchQuery.toLowerCase()));
     
-    const countriesToShow = filteredCountries.slice(0, currentIndex + batchSize);
-    currentIndex += batchSize;
+    // const countriesToShow = filteredCountries.slice(0, currentIndex + batchSize);
+    // currentIndex += batchSize;
 
     filteredCountries.forEach(country => {
         const countryDiv = document.createElement("div");
@@ -64,7 +65,10 @@ function displayCountries(filter = "", searchQuery = "") {
 // Show country details
 function showCountryDetails(countryName) {
     const country = allCountries.find(c => c.name.common === countryName);
-    if (!country) return;
+    if (!country){
+        console.log("SHIIIIIIIIIIIIIT");
+        return;
+    };
     
     singleCountry.innerHTML = `
         <img src="${country.flags.svg}" alt="flag" id="single-country-flag">
@@ -82,7 +86,8 @@ function showCountryDetails(countryName) {
             </div>
             <div id="single-country-borders">
                 <p id="borders-title"><strong>Border Countries:</strong></p>
-                ${country.borders.map((neighbor) => `<button id="button-country">${neighbor}</button>`).join("")}
+                ${country.borders ? country.borders.map((neighbor) => `<button id="button-country">${neighbor}</button>`).join("") : "<button id='button-country' style='cursor:not-allowed'>None</span>"}
+
             </div>
         </div>
     `;
@@ -119,13 +124,13 @@ loadBtn.addEventListener("click", () => {
 
 // Search functionality
 searchInput.addEventListener("input", () => {
-    currentIndex = 0;
+    // currentIndex = 0;
     displayCountries(filterSelect.value, searchInput.value);
 });
 
 // Filter functionality
 filterSelect.addEventListener("change", () => {
-    currentIndex = 0;
+    // currentIndex = 0;
     displayCountries(filterSelect.value, searchInput.value);
 });
 
